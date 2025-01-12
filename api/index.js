@@ -9,11 +9,8 @@ const port = 3000;
 const whiteLabel = ['https://localhost:3000'];
 const options = {
   origin: (origin, callback) => {
-    if (whiteLabel.includes(origin) || !origin){
-      callback(null, true)
-    } else {
-      callback(new Error('No permitido'))
-    }
+    if (whiteLabel.includes(origin) || !origin) callback(null, true);
+    else callback(new Error('No permitido'));
   }
 }
 

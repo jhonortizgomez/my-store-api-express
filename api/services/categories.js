@@ -1,4 +1,5 @@
-const { faker } = require('@faker-js/faker')
+const { faker } = require('@faker-js/faker');
+const boom = require('@hapi/boom');
 
 class CategoriesServices {
   constructor(){
@@ -18,7 +19,9 @@ class CategoriesServices {
   };
 
   async findOne(id){
-    return this.categories.find((category) => category.id === id );
+    const category = this.categories.find((category) => category.id === id );
+    if (!category) throw boom.notFound('Category not found');
+    return category;
   };
 };
 
