@@ -1,12 +1,30 @@
-const express = require('express');
+const { errorHandler, logErrors, boomErrorHandler } = require('./middlewares/errors')
 const routerApi = require('./routes');
+const express = require('express');
+const cors = require('cors');
+
 const app = express();
 const port = 3000;
 
+const whiteLabel = ['https://localhost:3000'];
+const options = {
+  origin: (origin, callback) => {
+    if (whiteLabel.includes(origin) || !origin){
+      callback(null, true)
+    } else {
+      callback(new Error('No permitido'))
+    }
+  }
+}
+
+
 app.use(express.json());
+app.use(cors(options));
 
 routerApi(app)
 
-app.listen(port, () => {
-  console.log('Todo ok')
-});
+app.use(logErrors);
+app.use(boomErrorHandler);
+app.use(errorHandler);
+
+app.listen(port, () => {});

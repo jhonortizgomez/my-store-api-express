@@ -1,16 +1,16 @@
-const express = require('express')
-const CategoriesServices = require('../services/categories')
-const categoriesRouter = express.Router()
+const express = require('express');
+const CategoriesServices = require('../services/categories');
+const categoriesRouter = express.Router();
 const services = new CategoriesServices();
 
-categoriesRouter.get('/', (req, res) => {
-  const categories = services.find();
+categoriesRouter.get('/', async (req, res) => {
+  const categories = await services.find();
   res.status(200).json(categories);
 });
 
-categoriesRouter.get('/:categoryId', (req, res) => {
+categoriesRouter.get('/:categoryId', async (req, res) => {
   const { categoryId } = req.params;
-  const category = services.findOne(categoryId);
+  const category = await services.findOne(categoryId);
   res.status(200).json(category);
 });
 
