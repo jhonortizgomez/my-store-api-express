@@ -6,10 +6,10 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
-const whiteLabel = ['https://localhost:3000'];
+const whiteList = ['https://localhost:3000'];
 const options = {
   origin: (origin, callback) => {
-    if (whiteLabel.includes(origin) || !origin) callback(null, true);
+    if (whiteList.includes(origin) || !origin) callback(null, true);
     else callback(new Error('No permitido'));
   }
 }
