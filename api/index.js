@@ -1,4 +1,4 @@
-const { errorHandler, logErrors, boomErrorHandler } = require('./middlewares/errors')
+const { errorHandler, logErrors, boomErrorHandler, ormErrorHandler } = require('./middlewares/errors')
 const routerApi = require('./routes');
 const express = require('express');
 const cors = require('cors');
@@ -21,6 +21,7 @@ app.use(cors(options));
 routerApi(app)
 
 app.use(logErrors);
+app.use(ormErrorHandler);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 

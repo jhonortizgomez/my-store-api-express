@@ -15,19 +15,6 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id',
-  validatorHandler(getUserSchema, 'params'),
-  async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      const category = await service.findOne(id);
-      res.json(category);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 router.post('/',
   validatorHandler(createUserSchema, 'body'),
   async (req, res, next) => {
@@ -35,6 +22,19 @@ router.post('/',
       const body = req.body;
       const newCategory = await service.create(body);
       res.status(201).json(newCategory);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get('/:id',
+  validatorHandler(getUserSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const category = await service.findOne(id);
+      res.json(category);
     } catch (error) {
       next(error);
     }
